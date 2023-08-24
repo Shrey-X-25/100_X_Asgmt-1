@@ -2,15 +2,41 @@ const socket = io()
 let name;
 let textarea = document.querySelector('#textarea')
 let messageArea = document.querySelector('.message__area')
+
 do {
     name = prompt('Please enter your name: ')
 } while(!name)
 
 textarea.addEventListener('keyup', (e) => {
     if(e.key === 'Enter') {
-        sendMessage(e.target.value)
+        msg = convertWordsToEmojis(e.target.value)
+        sendMessage(msg)
     }
 })
+
+// Your existing code...
+
+// Emoji mapping
+
+
+function convertWordsToEmojis(message) {
+    const emojiMap = {
+        'hey': '👋',
+        'react': '⚛️',
+        'lol': '🤣',
+        'happy': '😁',
+        'sad': '😔',
+        'like': '❤️',
+        'hbd': '🎉🎈🎊',
+        // Add more word-emoji mappings as needed
+    };
+    const words = message.split(' ');
+    const convertedWords = words.map(word => {
+        const emoji = emojiMap[word.toLowerCase()];
+        return emoji ? emoji : word;
+    });
+    return convertedWords.join(' ');
+}
 
 function sendMessage(message) {
     let msg = {
@@ -49,5 +75,3 @@ socket.on('message', (msg) => {
 function scrollToBottom() {
     messageArea.scrollTop = messageArea.scrollHeight
 }
-
-
