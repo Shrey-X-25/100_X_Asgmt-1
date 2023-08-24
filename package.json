@@ -1,0 +1,24 @@
+{
+  "name": "100_x_asgmt-1",
+  "version": "1.0.0",
+  "description": "A ChatApp using Socket.io &amp; Node JS with the assistance of ChatGPT 3.5.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shrey-X-25/100_X_Asgmt-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shrey-X-25/100_X_Asgmt-1/issues"
+  },
+  "homepage": "https://github.com/Shrey-X-25/100_X_Asgmt-1#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
