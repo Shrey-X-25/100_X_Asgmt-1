@@ -9,8 +9,17 @@ do {
 
 textarea.addEventListener('keyup', (e) => {
     if(e.key === 'Enter') {
-        msg = convertWordsToEmojis(e.target.value)
-        sendMessage(msg)
+        // handleSlashCommand(e.target.value)
+        // msg = convertWordsToEmojis(e.target.value)
+        const msg = (e.target.value);
+        const args = msg.split(' ');
+        
+        if(msg[0]=='/' &&  args.length == 1){
+            const slashCommand = args[0].toLowerCase();
+            handleSlashCommand(slashCommand)
+        }else{
+            sendMessage(e.target.value)
+        }
     }
 })
 
@@ -26,22 +35,22 @@ function convertWordsToEmojis(message) {
         'lol': '🤣',
         'happy': '😁',
         'sad': '😔',
-        'like': '❤️',
-        'hbd': '🎉🎈🎊',
+        'heart': '❤️',
         // Add more word-emoji mappings as needed
     };
-    const words = message.split(' ');
-    const convertedWords = words.map(word => {
+
+    // message = message;
+const words = message.split(/[\s,.!?;:]+/);
+   const convertedWords = words.map(word => {
         const emoji = emojiMap[word.toLowerCase()];
         return emoji ? emoji : word;
     });
     return convertedWords.join(' ');
 }
-
 function sendMessage(message) {
     let msg = {
         user: name,
-        message: message.trim()
+        message: convertWordsToEmojis(message)
     }
     // Append 
     appendMessage(msg, 'outgoing')
@@ -74,4 +83,42 @@ socket.on('message', (msg) => {
 
 function scrollToBottom() {
     messageArea.scrollTop = messageArea.scrollHeight
+}
+
+function handleSlashCommand(command) {
+    console.log(command.toString().trim() === "/help");
+
+    switch (command.toString().trim()) {
+        case '/help':
+            displayHelp();
+            break;
+        case '/info':
+            displayInfo();
+            break;
+        case '/clear':
+            clearMessages();
+            break;
+        default:
+            sendMessage('Invalid command'+command+'. Type /help for available commands.');
+            break;
+    }
+}
+
+function displayHelp() {
+    const helpMessage = 'Available commands:\n' +
+                        '/help - Display available commands\n' +
+                        '/info - Display information\n' +
+                        '/clear - Clear messages';
+    sendMessage(helpMessage);
+}
+
+function displayInfo() {
+    const infoMessage = 'This is a simple chat application.\n' +
+                        'It allows you to send messages and use slash commands.';
+    sendMessage(infoMessage);
+}
+
+function clearMessages() {
+    messageArea.innerHTML = '';
+    textarea.value = ''
 }
