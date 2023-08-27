@@ -7,11 +7,28 @@ do {
     name = prompt('Please enter your name: ')
 } while(!name)
 
+function sendEvent(){
+    const msg = textarea.value;
+    if (!msg.trim()) {
+        return;
+    }
+    const args = msg.split(' ');
+    
+    if(msg[0]=='/' &&  args.length == 1){
+        const slashCommand = args[0].toLowerCase();
+        handleSlashCommand(slashCommand)
+    }else{
+        sendMessage(msg)
+    }    
+}
+
 textarea.addEventListener('keyup', (e) => {
     if(e.key === 'Enter') {
-        // handleSlashCommand(e.target.value)
-        // msg = convertWordsToEmojis(e.target.value)
+    
         const msg = (e.target.value);
+        if (!msg.trim()) {
+            return;
+        }
         const args = msg.split(' ');
         
         if(msg[0]=='/' &&  args.length == 1){
@@ -66,10 +83,23 @@ function appendMessage(msg, type) {
     let mainDiv = document.createElement('div')
     let className = type
     mainDiv.classList.add(className, 'message')
+    mainDiv.style.padding='10px'
+    const currentHour = new Date().getHours();
+    const formattedHour = (currentHour < 10 ? '0' : '') + currentHour;
+    const currentMinute = new Date().getMinutes();
+    const formattedMinute = (currentMinute < 10 ? '0' : '') + currentMinute;
+    let ampm = "";
 
+    if (currentHour >= 0 && currentHour < 12) {
+    ampm = "AM";
+    } else {
+    ampm = "PM";
+    }
+    
     let markup = `
         <h4>${msg.user}</h4>
         <p>${msg.message}</p>
+        <p class="text-sm">${formattedHour}:${formattedMinute} ${ampm}</p>
     `
     mainDiv.innerHTML = markup
     messageArea.appendChild(mainDiv)
@@ -105,15 +135,15 @@ function handleSlashCommand(command) {
 }
 
 function displayHelp() {
-    const helpMessage = 'Available commands:\n' +
-                        '/help - Display available commands\n' +
-                        '/info - Display information\n' +
+    const helpMessage = 'Available commands: <br>' +
+                        '/help - Display available commands <br>' +
+                        '/info - Display information <br>' +
                         '/clear - Clear messages';
     sendMessage(helpMessage);
 }
 
 function displayInfo() {
-    const infoMessage = 'This is a simple chat application.\n' +
+    const infoMessage = 'This is a simple chat application. <br>' +
                         'It allows you to send messages and use slash commands.';
     sendMessage(infoMessage);
 }

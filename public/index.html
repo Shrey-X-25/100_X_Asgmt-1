@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wassup chat app</title>
+    <title>Gentoo ChatApp</title>
+    <link rel="icon" type="image/x-icon" href="Gentoo.png">
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
     <section class="chat__section">
         <div class="brand">
-            <img height="40" src="/wassup.jpg" alt="">
-            <h1>Guftagoo</h1>
+            <img height="40" src="/Gentoo.png" alt="">
+            <h1>G E N T O O</h1>
         </div>
         <div class="message__area"></div>
-        <div>
-            <textarea id="textarea" cols="30" rows="1" placeholder="Write a message..."></textarea>
+        <div style="display: flex;">
+            <input class="send" type="text" id="textarea" placeholder="Write a message...">
+            <button class="send-button send" onclick="sendEvent()"><i class="bi bi-rocket-takeoff"></i></button>
         </div>
     </section>
     <script src="/socket.io/socket.io.js"></script>
