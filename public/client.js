@@ -48,12 +48,49 @@ textarea.addEventListener('keyup', (e) => {
 function convertWordsToEmojis(message) {
     const emojiMap = {
         'hey': '👋',
-        'react': '⚛️',
-        'lol': '🤣',
-        'happy': '😁',
-        'sad': '😔',
-        'heart': '❤️',
-        // Add more word-emoji mappings as needed
+    'react': '⚛️',
+    'lol': '🤣',
+    'happy': '😁',
+    'sad': '😔',
+    'heart': '❤️',
+    'thumbsup': '👍',
+    'thumbsdown': '👎',
+    'star': '⭐️',
+    'fire': '🔥',
+    'rocket': '🚀',
+    'sun': '☀️',
+    'moon': '🌙',
+    'cloud': '☁️',
+    'rainbow': '🌈',
+    'coffee': '☕️',
+    'cake': '🍰',
+    'pizza': '🍕',
+    'taco': '🌮',
+    'book': '📚',
+    'music': '🎵',
+    'movie': '🎬',
+    'guitar': '🎸',
+    'football': '⚽️',
+    'basketball': '🏀',
+    'globe': '🌍',
+    'umbrella': '☔️',
+    'camera': '📷',
+    'gift': '🎁',
+    'flag': '🚩',
+    'clock': '🕒',
+    'cat': '🐱',
+    'dog': '🐶',
+    'unicorn': '🦄',
+    'dolphin': '🐬',
+    'penguin': '🐧',
+    'elephant': '🐘',
+    'flamingo': '🦩',
+    'butterfly': '🦋',
+    'hamburger': '🍔',
+    'icecream': '🍦',
+    'cookie': '🍪',
+    'banana': '🍌',
+    // Add more word-emoji mappings as needed
     };
 
     // message = message;
@@ -125,12 +162,32 @@ function handleSlashCommand(command) {
         case '/info':
             displayInfo();
             break;
+        case '/map':
+            displayMap();
+            break;
         case '/clear':
             clearMessages();
             break;
+        case '/random':
+            sendRandomNumber();
+            break;
+        case '/joke':
+            sendDankJoke();
+            break;                
         default:
             sendMessage('Invalid command'+command+'. Type /help for available commands.');
             break;
+    }
+}
+
+async function fetchDankJoke() {
+    try {
+        const response = await fetch('https://v2.jokeapi.dev/joke/Programming?type=dank');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching dank joke:', error);
+        return null;
     }
 }
 
@@ -138,7 +195,10 @@ function displayHelp() {
     const helpMessage = 'Available commands: <br>' +
                         '/help - Display available commands <br>' +
                         '/info - Display information <br>' +
-                        '/clear - Clear messages';
+                        '/map - List of Convertable Words <br>' +
+                        '/clear - Clear messages <br>' +
+                        '/random - Generate a random number <br>' +
+                        '/joke - Get a Random joke';
     sendMessage(helpMessage);
 }
 
@@ -148,7 +208,71 @@ function displayInfo() {
     sendMessage(infoMessage);
 }
 
+function  displayMap() {
+    const EmojiMap = 
+            '<br>hey<br>' +
+            'react<br>' +
+            'lol<br>' +
+            'happy<br>' +
+            'sad<br>' +
+            'heart<br>' +
+            'thumbsup<br>' +
+            'thumbsdown<br>' +
+            'star<br>' +
+            'fire<br>' +
+            'rocket<br>' +
+            'sun<br>' +
+            'moon<br>' +
+            'cloud<br>' +
+            'rainbow<br>' +
+            'coffee<br>' +
+            'cake<br>' +
+            'pizza<br>' +
+            'taco<br>' +
+            'book<br>' +
+            'music<br>' +
+            'movie<br>' +
+            'guitar<br>' +
+            'football<br>' +
+            'basketball<br>' +
+            'globe<br>' +
+            'umbrella<br>' +
+            'camera<br>' +
+            'gift<br>' +
+            'flag<br>' +
+            'clock<br>' +
+            'cat<br>' +
+            'dog<br>' +
+            'unicorn<br>' +
+            'dolphin<br>' +
+            'penguin<br>' +
+            'elephant<br>' +
+            'flamingo<br>' +
+            'butterfly<br>' +
+            'hamburger<br>' +
+            'icecream<br>' +
+            'cookie<br>' +
+            'banana';
+    
+    sendMessage('Try typing these Words<br>' + EmojiMap);
+}
+
 function clearMessages() {
     messageArea.innerHTML = '';
     textarea.value = ''
+}
+
+function sendRandomNumber() {
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    sendMessage('Random Number - ' + randomNumber);
+}
+
+async function sendDankJoke() {
+    const dankJokeData = await fetchDankJoke();
+
+    if (dankJokeData && dankJokeData.joke) {
+        sendMessage('Joke - ' + dankJokeData.joke);
+    } else {
+        sendMessage('Failed to fetch a Joke. Please try again later.');
+    }
 }
