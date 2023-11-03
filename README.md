@@ -1,8 +1,8 @@
 The production version is hosted at: https://guftagoo-chatapp.onrender.com
 
-# Guftagoo Chat App
+# Gentoo Chat App
 
-Guftagoo Chat App is a simple web-based chat application built using Node.js and the Socket.io library with the assistance of ChatGPT 3.5. It allows users to communicate in Real-time by sending messages. The app provides a playful twist by automatically replacing certain words with corresponding emojis. In addition to regular chat functionality, the app supports a few interactive slash commands for added fun and utility.
+Gentoo Chat App is a simple web-based chat application which has our Gentoo House theme built using Node.js and the Socket.io library with the assistance of ChatGPT 3.5. It allows users to communicate in Real-time by sending messages. The app provides a playful twist by automatically replacing certain words with corresponding emojis. In addition to regular chat functionality, the app supports a few interactive slash commands for added fun and utility.
 
 ## Usage
 
